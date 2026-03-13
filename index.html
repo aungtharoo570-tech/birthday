@@ -166,9 +166,8 @@ heart.remove();
 setInterval(hearts,400);
 setTimeout(()=>{
 document.getElementById("intro").style.display="none";
+document.getElementById("gift").style.display="block";
 },3000);
-
-
 for(let i=0;i<30;i++){
 let conf=document.createElement("div");
 conf.innerHTML="🎉";
@@ -181,7 +180,11 @@ document.body.appendChild(conf);
 
 setTimeout(()=>{conf.remove();},3000);
 }
-}
+} 
+function openGift(){
+document.getElementById("intro").style.display="none";
+document.getElementById("gift").style.display="block";
+  }
 </script>
 </body>
 </html>
