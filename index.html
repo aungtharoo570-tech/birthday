@@ -1,81 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Happy Birthday</title>
+<title>Birthday Surprise</title>
 
 <style>
 
 body{
 margin:0;
 font-family:sans-serif;
-background:black;
+background:#ffc0e6;
 color:white;
 text-align:center;
 overflow-x:hidden;
 }
 
+/* INTRO */
+
 #intro{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
-background:black;
+background:#ffc0e6;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
 }
 
-h1{
-color:#ff4dd2;
-font-size:32px;
-text-shadow:0 0 10px #ff4dd2;
+.neon{
+font-size:40px;
+text-shadow:0 0 10px white,0 0 20px #ff4dd2,0 0 40px #ff4dd2;
+animation:blink 1s infinite alternate;
 }
 
-button{
-padding:15px 25px;
-font-size:18px;
-border:none;
-border-radius:10px;
-cursor:pointer;
+@keyframes blink{
+from{opacity:0.5}
+to{opacity:1}
 }
+
+/* GIFT BOX */
+
+.gift{
+font-size:80px;
+cursor:pointer;
+animation:shake 1s infinite;
+}
+
+@keyframes shake{
+0%{transform:rotate(-5deg)}
+50%{transform:rotate(5deg)}
+100%{transform:rotate(-5deg)}
+}
+
+/* MESSAGE */
 
 .message{
 max-width:600px;
 margin:auto;
-line-height:1.6;
+line-height:1.7;
 padding:20px;
+font-size:18px;
 }
 
-.gallery img{
-width:80%;
-max-width:300px;
-margin:10px;
-border-radius:10px;
+/* TYPE EFFECT */
+
+#typing{
+border-right:2px solid white;
+white-space:pre-line;
+overflow:hidden;
+display:inline-block;
 }
 
-video{
-width:90%;
-max-width:400px;
-margin-top:20px;
-border-radius:10px;
+/* 3D CAROUSEL */
+
+.gallery{
+margin-top:40px;
+display:flex;
+justify-content:center;
+perspective:1000px;
 }
+
+.carousel{
+width:260px;
+height:260px;
+position:relative;
+transform-style:preserve-3d;
+animation:spin 20s linear infinite;
+}
+
+.carousel img{
+position:absolute;
+width:220px;
+height:220px;
+border-radius:12px;
+object-fit:cover;
+left:20px;
+top:20px;
+}
+
+@keyframes spin{
+from{transform:rotateY(0deg)}
+to{transform:rotateY(360deg)}
+}
+
+/* HEART */
 
 .heart{
 position:fixed;
 bottom:-10px;
-color:#ff4dd2;
 font-size:20px;
 animation:float 6s linear infinite;
 }
 
 @keyframes float{
-0%{transform:translateY(100vh) scale(1)}
-100%{transform:translateY(-10vh) scale(1.5)}
+0%{transform:translateY(100vh)}
+100%{transform:translateY(-10vh)}
+}
+
+/* CHERRY BLOSSOM */
+
+.blossom{
+position:fixed;
+top:-20px;
+font-size:18px;
+animation:fall 8s linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-10vh)}
+100%{transform:translateY(110vh)}
+}
+
+/* VIDEO */
+
+video{
+width:90%;
+max-width:400px;
+margin-top:30px;
+border-radius:10px;
 }
 
 </style>
@@ -83,48 +148,28 @@ animation:float 6s linear infinite;
 
 <body>
 
+<!-- INTRO -->
+
 <div id="intro">
 
-<h1>Happy Birthday TuTu 🎂</h1>
+<h1 class="neon">Happy Birthday TuTu 🎂</h1>
 
-<button onclick="openGift()">
-Tap the gift to open your surprise 🎁
-</button>
+<div class="gift" onclick="openGift()">🎁</div>
 
 </div>
 
-<div id="gift" style="display:none;">
+<!-- MAIN -->
+
+<div id="giftPage" style="display:none">
 
 <h1>Happy Birthday ❤️</h1>
 
 <div class="message">
-
-Happy Birthday, TuTu. 🎂  
-<br><br>
-
-From today onward,  
-I wish you endless luck and happiness.  
-<br><br>
-
-Please always take good care of your health.  
-<br><br>
-
-May you have the courage  
-to let go of things that don't matter  
-and people who are not meant for you.  
-<br><br>
-
-Spend your time on the things  
-that truly matter in your life.  
-<br><br>
-
-And if life allows,  
-I hope I can always hear  
-your beautiful singing voice. 🎶
-
+<p id="typing"></p>
 </div>
 
 <div class="gallery">
+<div class="carousel" id="carousel">
 
 <img src="IMG_20260306_100008.jpg">
 <img src="IMG_20260307_143345.jpg">
@@ -137,8 +182,9 @@ your beautiful singing voice. 🎶
 <img src="IMG_20260311_143430.jpg">
 
 </div>
+</div>
 
-<video autoplay loop muted playsinline>
+<video autoplay loop controls>
 <source src="lv_7612043031386066184_20260313141159.mp4" type="video/mp4">
 </video>
 
@@ -146,27 +192,120 @@ your beautiful singing voice. 🎶
 
 <script>
 
+/* OPEN GIFT */
+
+function openGift(){
+
+document.getElementById("intro").style.display="none";
+document.getElementById("giftPage").style.display="block";
+
+startTyping();
+fireworks();
+
+}
+
+/* TYPING MESSAGE */
+
+const text=`Happy Birthday, TuTu. 🎂
+
+From today onward,
+I wish you endless luck and happiness.
+
+Please always take good care of your health.
+
+May you have the courage
+to let go of things that don't matter
+and people who are not meant for you.
+
+Spend your time on the things
+that truly matter in your life.
+
+And if life allows,
+I hope I can always hear
+your beautiful singing voice. 🎶`;
+
+let i=0;
+
+function startTyping(){
+let speed=40;
+function type(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,speed);
+}
+}
+type();
+}
+
+/* HEARTS */
+
 function hearts(){
 const heart=document.createElement("div");
 heart.className="heart";
 heart.innerHTML="❤";
 heart.style.left=Math.random()*100+"vw";
-heart.style.animationDuration=(Math.random()*3+3)+"s";
+heart.style.color="#ff4dd2";
 document.body.appendChild(heart);
 
-setTimeout(()=>{
-heart.remove();
-},6000);
+setTimeout(()=>{heart.remove();},6000);
 }
 
-setInterval(hearts,400);
+setInterval(hearts,500);
 
-function openGift(){
-document.getElementById("intro").style.display="none";
-document.getElementById("gift").style.display="block";
+/* CHERRY BLOSSOM */
+
+function blossom(){
+const b=document.createElement("div");
+b.className="blossom";
+b.innerHTML="🌸";
+b.style.left=Math.random()*100+"vw";
+document.body.appendChild(b);
+
+setTimeout(()=>{b.remove();},8000);
 }
+
+setInterval(blossom,700);
+
+/* FIREWORKS */
+
+function fireworks(){
+
+for(let i=0;i<30;i++){
+
+let conf=document.createElement("div");
+
+conf.innerHTML="🎆";
+
+conf.style.position="fixed";
+
+conf.style.left=Math.random()*100+"vw";
+
+conf.style.top=Math.random()*100+"vh";
+
+conf.style.fontSize="30px";
+
+document.body.appendChild(conf);
+
+setTimeout(()=>{conf.remove();},2000);
+
+}
+
+}
+
+/* 3D POSITION */
+
+const imgs=document.querySelectorAll("#carousel img");
+
+const angle=360/imgs.length;
+
+imgs.forEach((img,i)=>{
+
+img.style.transform=`rotateY(${angle*i}deg) translateZ(350px)`;
+
+});
 
 </script>
 
 </body>
-</html>
+  </html>
