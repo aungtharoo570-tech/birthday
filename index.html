@@ -11,13 +11,13 @@
 body{
 margin:0;
 font-family:sans-serif;
+background:black;
 color:white;
 text-align:center;
-background:black;
 overflow:hidden;
 }
 
-/* VIDEO */
+/* VIDEO BACKGROUND */
 
 video{
 position:fixed;
@@ -29,23 +29,45 @@ object-fit:cover;
 z-index:-3;
 }
 
-/* TAP SCREEN */
+/* DARK OVERLAY */
 
-#startScreen{
+.overlay{
 position:fixed;
 width:100%;
 height:100%;
-background:black;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-z-index:10;
+background:rgba(0,0,0,0.55);
+z-index:-2;
 }
 
-.tapText{
+/* START SCREEN */
+
+#startScreen{
+
+position:fixed;
+
+width:100%;
+height:100%;
+
+background:black;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+z-index:10;
+
+}
+
+.tap{
+
 font-size:32px;
+
 animation:pulse 1.5s infinite;
+
 }
 
 @keyframes pulse{
@@ -58,13 +80,20 @@ animation:pulse 1.5s infinite;
 
 }
 
+/* MAIN */
+
+#main{
+display:none;
+padding-top:70px;
+}
+
 /* HEART */
 
 .heart{
 position:fixed;
 bottom:-20px;
 color:#ff4dd2;
-font-size:20px;
+font-size:18px;
 animation:rise 6s linear infinite;
 }
 
@@ -76,36 +105,61 @@ animation:rise 6s linear infinite;
 
 }
 
-/* MAIN */
+/* BLOSSOM */
 
-#main{
-display:none;
-padding-top:70px;
+.blossom{
+
+position:fixed;
+
+top:-20px;
+
+font-size:18px;
+
+animation:fall 8s linear infinite;
+
 }
 
-/* GIFT */
+@keyframes fall{
 
-.gift{
-font-size:80px;
+0%{transform:translateY(-10vh)}
+
+100%{transform:translateY(110vh)}
+
 }
 
 /* MESSAGE */
 
 .message{
+
 max-width:650px;
+
 margin:auto;
+
 font-size:20px;
+
 line-height:1.7;
+
 padding:20px;
+
 }
 
-/* 3D PHOTOS */
+#typing{
+
+border-right:2px solid white;
+
+white-space:pre-line;
+
+}
+
+/* 3D PHOTO RING */
 
 .scene{
 
 width:280px;
 height:280px;
+
 margin:70px auto;
+
 perspective:1000px;
 
 }
@@ -114,8 +168,11 @@ perspective:1000px;
 
 width:100%;
 height:100%;
+
 position:relative;
+
 transform-style:preserve-3d;
+
 animation:spin 25s linear infinite;
 
 }
@@ -134,13 +191,13 @@ border-radius:14px;
 
 object-fit:cover;
 
-box-shadow:0 0 20px rgba(255,255,255,0.7);
+box-shadow:0 0 25px rgba(255,255,255,0.8);
 
 }
 
 @keyframes spin{
 
-from{transform:rotateY(0)}
+from{transform:rotateY(0deg)}
 
 to{transform:rotateY(360deg)}
 
@@ -159,19 +216,19 @@ to{transform:rotateY(360deg)}
 
 </video>
 
+<div class="overlay"></div>
+
 <!-- TAP SCREEN -->
 
 <div id="startScreen">
 
-<div class="tapText">Tap To Open 🎁</div>
+<div class="tap">Tap To Open 🎁</div>
 
 </div>
 
 <!-- MAIN -->
 
 <div id="main">
-
-<div class="gift">🎁</div>
 
 <h1>Happy Birthday ❤️</h1>
 
@@ -180,6 +237,8 @@ to{transform:rotateY(360deg)}
 <p id="typing"></p>
 
 </div>
+
+<!-- 3D PHOTOS -->
 
 <div class="scene">
 
@@ -243,6 +302,30 @@ h.remove()
 
 setInterval(heart,300)
 
+/* BLOSSOM */
+
+function blossom(){
+
+let b=document.createElement("div")
+
+b.className="blossom"
+
+b.innerHTML="🌸"
+
+b.style.left=Math.random()*100+"vw"
+
+document.body.appendChild(b)
+
+setTimeout(()=>{
+
+b.remove()
+
+},8000)
+
+}
+
+setInterval(blossom,700)
+
 /* TYPING */
 
 const text=`Happy Birthday, TuTu 🎂
@@ -261,7 +344,7 @@ that truly matter in your life.
 
 And if life allows,
 I hope I can always hear
-your beautiful singing voice.`
+your beautiful singing voice. 🎶`
 
 let i=0
 
