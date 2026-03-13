@@ -1,89 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300&display=swap" rel="stylesheet">
+<title>Happy Birthday</title>
 
 <style>
 
 body{
 margin:0;
-background:linear-gradient(45deg,#000000,#1a0026,#000000);
-background-size:400% 400%;
-animation:bg 10s infinite alternate;
+font-family:sans-serif;
+background:black;
 color:white;
 text-align:center;
-font-family:'Poppins',sans-serif;
 overflow-x:hidden;
 }
 
-@keyframes bg{
-0%{background-position:left}
-100%{background-position:right}
+#intro{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 }
 
 h1{
-font-family:'Dancing Script',cursive;
-font-size:50px;
 color:#ff4dd2;
-text-shadow:0 0 20px #ff4dd2;
-margin-top:40px;
+font-size:32px;
+text-shadow:0 0 10px #ff4dd2;
+}
+
+button{
+padding:15px 25px;
+font-size:18px;
+border:none;
+border-radius:10px;
+cursor:pointer;
 }
 
 .message{
-font-size:22px;
-width:85%;
+max-width:600px;
 margin:auto;
-line-height:1.8;
-margin-top:20px;
-}
-
-.gallery{
-width:220px;
-height:220px;
-margin:60px auto;
-position:relative;
-transform-style:preserve-3d;
-animation:spin 25s linear infinite;
+line-height:1.6;
+padding:20px;
 }
 
 .gallery img{
-position:absolute;
-width:100%;
-height:100%;
-border-radius:20px;
-object-fit:cover;
-box-shadow:0 0 20px rgba(255,255,255,0.3);
-}
-
-.gallery img:nth-child(1){transform:rotateY(0deg) translateZ(320px);}
-.gallery img:nth-child(2){transform:rotateY(36deg) translateZ(320px);}
-.gallery img:nth-child(3){transform:rotateY(72deg) translateZ(320px);}
-.gallery img:nth-child(4){transform:rotateY(108deg) translateZ(320px);}
-.gallery img:nth-child(5){transform:rotateY(144deg) translateZ(320px);}
-.gallery img:nth-child(6){transform:rotateY(180deg) translateZ(320px);}
-.gallery img:nth-child(7){transform:rotateY(216deg) translateZ(320px);}
-.gallery img:nth-child(8){transform:rotateY(252deg) translateZ(320px);}
-.gallery img:nth-child(9){transform:rotateY(288deg) translateZ(320px);}
-.gallery img:nth-child(10){transform:rotateY(324deg) translateZ(320px);}
-
-@keyframes spin{
-from{transform:rotateY(0deg)}
-to{transform:rotateY(360deg)}
+width:80%;
+max-width:300px;
+margin:10px;
+border-radius:10px;
 }
 
 video{
 width:90%;
-max-width:350px;
-margin-top:40px;
-border-radius:20px;
-box-shadow:0 0 20px #ff4dd2;
+max-width:400px;
+margin-top:20px;
+border-radius:10px;
 }
 
 .heart{
 position:fixed;
+bottom:-10px;
 color:#ff4dd2;
 font-size:20px;
 animation:float 6s linear infinite;
@@ -99,11 +83,11 @@ animation:float 6s linear infinite;
 
 <body>
 
-<div id="intro" style="position:fixed;top:0;left:0;width:100%;height:100%;background:black;display:flex;flex-direction:column;justify-content:center;align-items:center;">
+<div id="intro">
 
 <h1>Happy Birthday TuTu 🎂</h1>
 
-<button onclick="openGift()" style="padding:15px 25px;font-size:18px">
+<button onclick="openGift()">
 Tap the gift to open your surprise 🎁
 </button>
 
@@ -112,25 +96,32 @@ Tap the gift to open your surprise 🎁
 <div id="gift" style="display:none;">
 
 <h1>Happy Birthday ❤️</h1>
+
 <div class="message">
 
-Happy Birthday, TuTu. 🎂
+Happy Birthday, TuTu. 🎂  
+<br><br>
 
-From today onward,
-I wish you endless luck and happiness.
+From today onward,  
+I wish you endless luck and happiness.  
+<br><br>
 
-Please always take good care of your health.
+Please always take good care of your health.  
+<br><br>
 
-May you have the courage
-to let go of things that don't matter
-and people who are not meant for you.
+May you have the courage  
+to let go of things that don't matter  
+and people who are not meant for you.  
+<br><br>
 
-Spend your time on the things
-that truly matter in your life.
+Spend your time on the things  
+that truly matter in your life.  
+<br><br>
 
-And if life allows,
-I hope I can always hear
+And if life allows,  
+I hope I can always hear  
 your beautiful singing voice. 🎶
+
 </div>
 
 <div class="gallery">
@@ -139,7 +130,6 @@ your beautiful singing voice. 🎶
 <img src="IMG_20260307_143345.jpg">
 <img src="IMG_20260307_143417.jpg">
 <img src="IMG_20260307_143433.jpg">
-<img src="IMG_20260307_143450.jpg">
 <img src="IMG_20260307_143622.jpg">
 <img src="IMG_20260307_143700_996.jpg">
 <img src="IMG_20260307_143709_397.jpg">
@@ -147,10 +137,13 @@ your beautiful singing voice. 🎶
 <img src="IMG_20260311_143430.jpg">
 
 </div>
+
 <video autoplay loop muted playsinline>
 <source src="lv_7612043031386066184_20260313141159.mp4" type="video/mp4">
 </video>
+
 </div>
+
 <script>
 
 function hearts(){
@@ -168,23 +161,12 @@ heart.remove();
 
 setInterval(hearts,400);
 
-for(let i=0;i<30;i++){
-let conf=document.createElement("div");
-conf.innerHTML="🎉";
-conf.style.position="fixed";
-conf.style.left=Math.random()*100+"vw";
-conf.style.top = "-10px";
-conf.style.fontSize="30px";
-conf.style.animation="float 3s linear";
-document.body.appendChild(conf);
-
-setTimeout(()=>{conf.remove();},3000);
-}
-} 
 function openGift(){
 document.getElementById("intro").style.display="none";
 document.getElementById("gift").style.display="block";
-  }
+}
+
 </script>
+
 </body>
 </html>
