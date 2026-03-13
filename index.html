@@ -2,8 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Birthday Surprise</title>
 
 <style>
@@ -11,37 +10,57 @@
 body{
 margin:0;
 font-family:sans-serif;
-background:#ffc0e6;
 color:white;
 text-align:center;
 overflow-x:hidden;
+}
+
+/* VIDEO BACKGROUND */
+
+video.bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-1;
 }
 
 /* INTRO */
 
 #intro{
 position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
-background:#ffc0e6;
+background:black;
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
+z-index:10;
 }
 
-.neon{
-font-size:40px;
+.introText{
+font-size:45px;
 text-shadow:0 0 10px white,0 0 20px #ff4dd2,0 0 40px #ff4dd2;
-animation:blink 1s infinite alternate;
+animation:glow 1s infinite alternate;
 }
 
-@keyframes blink{
+@keyframes glow{
 from{opacity:0.5}
 to{opacity:1}
 }
 
-/* GIFT BOX */
+/* MAIN */
+
+#main{
+display:none;
+padding-top:80px;
+}
+
+/* GIFT */
 
 .gift{
 font-size:80px;
@@ -60,50 +79,47 @@ animation:shake 1s infinite;
 .message{
 max-width:600px;
 margin:auto;
+font-size:18px;
 line-height:1.7;
 padding:20px;
-font-size:18px;
 }
-
-/* TYPE EFFECT */
 
 #typing{
 border-right:2px solid white;
 white-space:pre-line;
-overflow:hidden;
-display:inline-block;
 }
 
-/* 3D CAROUSEL */
+/* GLASS PHOTO CARDS */
 
 .gallery{
-margin-top:40px;
 display:flex;
+flex-wrap:wrap;
 justify-content:center;
-perspective:1000px;
+gap:20px;
+padding:20px;
 }
 
-.carousel{
-width:260px;
-height:260px;
-position:relative;
-transform-style:preserve-3d;
-animation:spin 20s linear infinite;
+.card{
+width:200px;
+height:200px;
+border-radius:15px;
+overflow:hidden;
+
+background:rgba(255,255,255,0.2);
+backdrop-filter:blur(10px);
+box-shadow:0 0 15px rgba(255,255,255,0.4);
+
+transition:0.5s;
 }
 
-.carousel img{
-position:absolute;
-width:220px;
-height:220px;
-border-radius:12px;
+.card:hover{
+transform:scale(1.1);
+}
+
+.card img{
+width:100%;
+height:100%;
 object-fit:cover;
-left:20px;
-top:20px;
-}
-
-@keyframes spin{
-from{transform:rotateY(0deg)}
-to{transform:rotateY(360deg)}
 }
 
 /* HEART */
@@ -120,7 +136,7 @@ animation:float 6s linear infinite;
 100%{transform:translateY(-10vh)}
 }
 
-/* CHERRY BLOSSOM */
+/* BLOSSOM */
 
 .blossom{
 position:fixed;
@@ -134,33 +150,28 @@ animation:fall 8s linear infinite;
 100%{transform:translateY(110vh)}
 }
 
-/* VIDEO */
-
-video{
-width:90%;
-max-width:400px;
-margin-top:30px;
-border-radius:10px;
-}
-
 </style>
 </head>
 
 <body>
 
+<!-- VIDEO BACKGROUND -->
+
+<video class="bg" autoplay loop playsinline>
+<source src="lv_7612043031386066184_20260313141159.mp4" type="video/mp4">
+</video>
+
 <!-- INTRO -->
 
 <div id="intro">
-
-<h1 class="neon">Happy Birthday TuTu 🎂</h1>
-
-<div class="gift" onclick="openGift()">🎁</div>
-
+<h1 class="introText">Happy Birthday TuTu 🎂</h1>
 </div>
 
-<!-- MAIN -->
+<!-- MAIN PAGE -->
 
-<div id="giftPage" style="display:none">
+<div id="main">
+
+<div class="gift" onclick="openGift()">🎁</div>
 
 <h1>Happy Birthday ❤️</h1>
 
@@ -168,43 +179,41 @@ border-radius:10px;
 <p id="typing"></p>
 </div>
 
+<!-- GLASS PHOTO CARDS -->
+
 <div class="gallery">
-<div class="carousel" id="carousel">
 
-<img src="IMG_20260306_100008.jpg">
-<img src="IMG_20260307_143345.jpg">
-<img src="IMG_20260307_143417.jpg">
-<img src="IMG_20260307_143433.jpg">
-<img src="IMG_20260307_143622.jpg">
-<img src="IMG_20260307_143700_996.jpg">
-<img src="IMG_20260307_143709_397.jpg">
-<img src="IMG_20260311_143420.jpg">
-<img src="IMG_20260311_143430.jpg">
+<div class="card"><img src="IMG_20260306_100008.jpg"></div>
+<div class="card"><img src="IMG_20260307_143345.jpg"></div>
+<div class="card"><img src="IMG_20260307_143417.jpg"></div>
+<div class="card"><img src="IMG_20260307_143433.jpg"></div>
+<div class="card"><img src="IMG_20260307_143450.jpg"></div>
+<div class="card"><img src="IMG_20260307_143622.jpg"></div>
+<div class="card"><img src="IMG_20260307_143700_996.jpg"></div>
+<div class="card"><img src="IMG_20260307_143709_397.jpg"></div>
+<div class="card"><img src="IMG_20260311_143420.jpg"></div>
 
 </div>
-</div>
-
-<video autoplay loop controls>
-<source src="lv_7612043031386066184_20260313141159.mp4" type="video/mp4">
-</video>
 
 </div>
 
 <script>
 
-/* OPEN GIFT */
+/* INTRO 3 SEC */
+
+setTimeout(()=>{
+document.getElementById("intro").style.display="none";
+document.getElementById("main").style.display="block";
+},3000);
+
+/* GIFT */
 
 function openGift(){
-
-document.getElementById("intro").style.display="none";
-document.getElementById("giftPage").style.display="block";
-
 startTyping();
 fireworks();
-
 }
 
-/* TYPING MESSAGE */
+/* TYPING LETTER */
 
 const text=`Happy Birthday, TuTu. 🎂
 
@@ -227,14 +236,15 @@ your beautiful singing voice. 🎶`;
 let i=0;
 
 function startTyping(){
-let speed=40;
+
 function type(){
 if(i<text.length){
 document.getElementById("typing").innerHTML+=text.charAt(i);
 i++;
-setTimeout(type,speed);
+setTimeout(type,40);
 }
 }
+
 type();
 }
 
@@ -242,27 +252,37 @@ type();
 
 function hearts(){
 const heart=document.createElement("div");
+
 heart.className="heart";
 heart.innerHTML="❤";
 heart.style.left=Math.random()*100+"vw";
-heart.style.color="#ff4dd2";
+
 document.body.appendChild(heart);
 
-setTimeout(()=>{heart.remove();},6000);
+setTimeout(()=>{
+heart.remove();
+},6000);
 }
 
 setInterval(hearts,500);
 
-/* CHERRY BLOSSOM */
+/* BLOSSOM */
 
 function blossom(){
+
 const b=document.createElement("div");
+
 b.className="blossom";
 b.innerHTML="🌸";
+
 b.style.left=Math.random()*100+"vw";
+
 document.body.appendChild(b);
 
-setTimeout(()=>{b.remove();},8000);
+setTimeout(()=>{
+b.remove();
+},8000);
+
 }
 
 setInterval(blossom,700);
@@ -278,34 +298,21 @@ let conf=document.createElement("div");
 conf.innerHTML="🎆";
 
 conf.style.position="fixed";
-
 conf.style.left=Math.random()*100+"vw";
-
 conf.style.top=Math.random()*100+"vh";
-
 conf.style.fontSize="30px";
 
 document.body.appendChild(conf);
 
-setTimeout(()=>{conf.remove();},2000);
+setTimeout(()=>{
+conf.remove();
+},2000);
 
 }
 
 }
-
-/* 3D POSITION */
-
-const imgs=document.querySelectorAll("#carousel img");
-
-const angle=360/imgs.length;
-
-imgs.forEach((img,i)=>{
-
-img.style.transform=`rotateY(${angle*i}deg) translateZ(350px)`;
-
-});
 
 </script>
 
 </body>
-  </html>
+</html>
