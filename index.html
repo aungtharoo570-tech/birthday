@@ -2,18 +2,32 @@
 <html>
 <head>
 <title>Happy Birthday</title>
+
 <style>
 body{
 background:black;
 color:white;
 text-align:center;
 font-family:sans-serif;
+overflow:hidden;
 }
 
 h1{
-margin-top:40%;
+margin-top:40px;
 font-size:40px;
 color:pink;
+}
+
+img{
+width:200px;
+border-radius:20px;
+margin-top:20px;
+}
+
+video{
+width:250px;
+margin-top:20px;
+border-radius:15px;
 }
 
 .heart{
@@ -27,14 +41,24 @@ animation:beat 1s infinite;
 100%{transform:scale(1);}
 }
 </style>
+
 </head>
 
 <body>
 
-<h1>Happy Birthday</h1>
+<h1>Happy Birthday ❤️</h1>
+
 <div class="heart">❤️</div>
 
-<p>Wishing you happiness and love.</p>
+<p>May your day be full of love and happiness</p>
+
+<img src="photo.jpg">
+
+<br>
+
+<video controls>
+<source src="video.mp4" type="video/mp4">
+</video>
 
 </body>
 </html>
