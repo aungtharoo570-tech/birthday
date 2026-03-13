@@ -1,206 +1,127 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Birthday Surprise</title>
+<meta charset="UTF-8">
+<title>Happy Birthday</title>
 
 <style>
 
 body{
 margin:0;
-font-family:sans-serif;
+overflow:hidden;
+font-family:cursive;
 background:black;
 color:white;
 text-align:center;
-overflow:hidden;
 }
 
 /* VIDEO BACKGROUND */
 
-video{
+#bgVideo{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+right:0;
+bottom:0;
+min-width:100%;
+min-height:100%;
 object-fit:cover;
-z-index:-3;
+z-index:-1;
+filter:brightness(40%);
 }
 
-/* DARK OVERLAY */
+/* TAP SCREEN */
 
-.overlay{
-position:fixed;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.55);
-z-index:-2;
-}
-
-/* START SCREEN */
-
-#startScreen{
-
-position:fixed;
-
-width:100%;
-height:100%;
-
-background:black;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-flex-direction:column;
-
-z-index:10;
-
-}
-
-.tap{
-
-font-size:32px;
-
-animation:pulse 1.5s infinite;
-
+#tap{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:28px;
+cursor:pointer;
+animation:pulse 2s infinite;
 }
 
 @keyframes pulse{
-
-0%{opacity:0.4}
-
-50%{opacity:1}
-
-100%{opacity:0.4}
-
+0%{transform:translate(-50%,-50%) scale(1);}
+50%{transform:translate(-50%,-50%) scale(1.2);}
+100%{transform:translate(-50%,-50%) scale(1);}
 }
 
-/* MAIN */
+/* GIFT BOX */
 
-#main{
+#gift{
+font-size:70px;
 display:none;
-padding-top:70px;
+margin-top:120px;
+animation:shake 1s infinite;
 }
 
-/* HEART */
-
-.heart{
-position:fixed;
-bottom:-20px;
-color:#ff4dd2;
-font-size:18px;
-animation:rise 6s linear infinite;
-}
-
-@keyframes rise{
-
-0%{transform:translateY(0)}
-
-100%{transform:translateY(-110vh)}
-
-}
-
-/* BLOSSOM */
-
-.blossom{
-
-position:fixed;
-
-top:-20px;
-
-font-size:18px;
-
-animation:fall 8s linear infinite;
-
-}
-
-@keyframes fall{
-
-0%{transform:translateY(-10vh)}
-
-100%{transform:translateY(110vh)}
-
+@keyframes shake{
+0%{transform:rotate(0)}
+25%{transform:rotate(5deg)}
+50%{transform:rotate(-5deg)}
+75%{transform:rotate(5deg)}
+100%{transform:rotate(0)}
 }
 
 /* MESSAGE */
 
-.message{
-
-max-width:650px;
-
-margin:auto;
-
-font-size:20px;
-
-line-height:1.7;
-
+#message{
+display:none;
+margin-top:30px;
+font-size:18px;
+line-height:30px;
 padding:20px;
-
 }
 
-#typing{
+/* HEARTS */
 
-border-right:2px solid white;
-
-white-space:pre-line;
-
+.heart{
+position:fixed;
+color:pink;
+font-size:20px;
+animation:float 6s linear infinite;
 }
 
-/* 3D PHOTO RING */
-
-.scene{
-
-width:280px;
-height:280px;
-
-margin:70px auto;
-
-perspective:1000px;
-
+@keyframes float{
+0%{transform:translateY(0)}
+100%{transform:translateY(-100vh)}
 }
 
-.ring{
+/* PHOTO GLOBE */
 
-width:100%;
-height:100%;
-
-position:relative;
-
-transform-style:preserve-3d;
-
-animation:spin 25s linear infinite;
-
-}
-
-.ring img{
-
+#globe{
 position:absolute;
+top:65%;
+left:50%;
+transform-style:preserve-3d;
+transform:translateX(-50%);
+animation:spin 20s linear infinite;
+}
 
-width:200px;
-height:200px;
-
-left:40px;
-top:40px;
-
-border-radius:14px;
-
-object-fit:cover;
-
-box-shadow:0 0 25px rgba(255,255,255,0.8);
-
+#globe img{
+position:absolute;
+width:110px;
+height:110px;
+border-radius:20px;
+box-shadow:0 0 20px pink;
 }
 
 @keyframes spin{
+0%{transform:translateX(-50%) rotateY(0deg)}
+100%{transform:translateX(-50%) rotateY(360deg)}
+}
 
-from{transform:rotateY(0deg)}
+/* FIREWORK */
 
-to{transform:rotateY(360deg)}
+.fire{
+position:fixed;
+font-size:30px;
+animation:boom 2s linear;
+}
 
+@keyframes boom{
+0%{transform:scale(0)}
+100%{transform:scale(2);opacity:0}
 }
 
 </style>
@@ -211,124 +132,71 @@ to{transform:rotateY(360deg)}
 <!-- VIDEO -->
 
 <video id="bgVideo" loop playsinline>
-
-<source src="video.mp4" type="video/mp4">
-
+<source src="lv_7612043031386066184_20260313141159.mp4" type="video/mp4">
 </video>
 
-<div class="overlay"></div>
+<!-- TAP -->
 
-<!-- TAP SCREEN -->
+<div id="tap" onclick="start()">Tap To Open 🎁</div>
 
-<div id="startScreen">
+<!-- GIFT -->
 
-<div class="tap">Tap To Open 🎁</div>
+<div id="gift" onclick="openGift()">🎁</div>
 
-</div>
+<!-- MESSAGE -->
 
-<!-- MAIN -->
+<div id="message">
 
-<div id="main">
+<h2>Happy Birthday ❤️</h2>
 
-<h1>Happy Birthday ❤️</h1>
-
-<div class="message">
-
-<p id="typing"></p>
+<p id="text"></p>
 
 </div>
 
-<!-- 3D PHOTOS -->
+<!-- PHOTO GLOBE -->
 
-<div class="scene">
+<div id="globe">
 
-<div class="ring" id="ring">
-
-<img src="IMG_20260306_100008.jpg">
-<img src="IMG_20260307_143345.jpg">
-<img src="IMG_20260307_143417.jpg">
-<img src="IMG_20260307_143433.jpg">
-<img src="IMG_20260307_143450.jpg">
-<img src="IMG_20260307_143622.jpg">
-<img src="IMG_20260307_143700_996.jpg">
-<img src="IMG_20260307_143709_397.jpg">
-<img src="IMG_20260311_143420.jpg">
-
-</div>
-
-</div>
+<img src="IMG_20260306_100008.jpg" style="transform:rotateY(0deg) translateZ(250px)">
+<img src="IMG_20260307_143345.jpg" style="transform:rotateY(60deg) translateZ(250px)">
+<img src="IMG_20260307_143417.jpg" style="transform:rotateY(120deg) translateZ(250px)">
+<img src="IMG_20260307_143433.jpg" style="transform:rotateY(180deg) translateZ(250px)">
+<img src="IMG_20260307_143450.jpg" style="transform:rotateY(240deg) translateZ(250px)">
+<img src="IMG_20260311_143420.jpg" style="transform:rotateY(300deg) translateZ(250px)">
 
 </div>
 
 <script>
 
-/* START BUTTON */
+/* TAP */
 
-document.getElementById("startScreen").onclick=function(){
+function start(){
 
-document.getElementById("startScreen").style.display="none"
+document.getElementById("tap").style.display="none";
+document.getElementById("gift").style.display="block";
 
-document.getElementById("main").style.display="block"
-
-const video=document.getElementById("bgVideo")
-
-video.play()
-
-video.muted=false
+let v=document.getElementById("bgVideo");
+v.muted=false;
+v.play();
 
 }
 
-/* HEART EFFECT */
+/* OPEN GIFT */
 
-function heart(){
+function openGift(){
 
-let h=document.createElement("div")
+document.getElementById("gift").style.display="none";
+document.getElementById("message").style.display="block";
 
-h.className="heart"
-
-h.innerHTML="❤"
-
-h.style.left=Math.random()*100+"vw"
-
-document.body.appendChild(h)
-
-setTimeout(()=>{
-
-h.remove()
-
-},6000)
+typing();
+fireworks();
+hearts();
 
 }
 
-setInterval(heart,300)
+/* TYPING LETTER */
 
-/* BLOSSOM */
-
-function blossom(){
-
-let b=document.createElement("div")
-
-b.className="blossom"
-
-b.innerHTML="🌸"
-
-b.style.left=Math.random()*100+"vw"
-
-document.body.appendChild(b)
-
-setTimeout(()=>{
-
-b.remove()
-
-},8000)
-
-}
-
-setInterval(blossom,700)
-
-/* TYPING */
-
-const text=`Happy Birthday, TuTu 🎂
+let msg=`Happy Birthday, TuTu 🎂
 
 From today onward,
 I wish you endless luck and happiness.
@@ -344,39 +212,64 @@ that truly matter in your life.
 
 And if life allows,
 I hope I can always hear
-your beautiful singing voice. 🎶`
+your beautiful singing voice. 🎶`;
 
-let i=0
+let i=0;
 
-function type(){
+function typing(){
 
-if(i<text.length){
+if(i<msg.length){
 
-document.getElementById("typing").innerHTML+=text.charAt(i)
+document.getElementById("text").innerHTML+=msg.charAt(i);
+i++;
 
-i++
-
-setTimeout(type,40)
-
-}
+setTimeout(typing,40);
 
 }
 
-type()
+}
 
-/* 3D PHOTO */
+/* HEARTS */
 
-const imgs=document.querySelectorAll("#ring img")
+function hearts(){
 
-const angle=360/imgs.length
+setInterval(()=>{
 
-imgs.forEach((img,i)=>{
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤";
+h.style.left=Math.random()*100+"vw";
 
-img.style.transform=`rotateY(${angle*i}deg) translateZ(350px)`
+document.body.appendChild(h);
 
-})
+setTimeout(()=>{h.remove()},6000);
+
+},400);
+
+}
+
+/* FIREWORK */
+
+function fireworks(){
+
+setInterval(()=>{
+
+let f=document.createElement("div");
+f.className="fire";
+f.innerHTML="🎆";
+
+f.style.left=Math.random()*100+"vw";
+f.style.top=Math.random()*80+"vh";
+
+document.body.appendChild(f);
+
+setTimeout(()=>{f.remove()},2000);
+
+},800);
+
+}
 
 </script>
 
 </body>
-</html>
+  </html>
