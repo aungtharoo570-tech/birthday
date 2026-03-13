@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Birthday Surprise</title>
@@ -14,6 +14,7 @@ font-family:sans-serif;
 color:white;
 text-align:center;
 overflow:hidden;
+background:black;
 }
 
 /* VIDEO BACKGROUND */
@@ -25,7 +26,7 @@ left:0;
 width:100%;
 height:100%;
 object-fit:cover;
-z-index:-2;
+z-index:-3;
 }
 
 /* DARK OVERLAY */
@@ -35,15 +36,46 @@ position:fixed;
 width:100%;
 height:100%;
 background:rgba(0,0,0,0.35);
+z-index:-2;
+}
+
+/* PINK HEART BACKGROUND */
+
+.hearts-bg{
+position:fixed;
+bottom:0;
+width:100%;
+height:100%;
+pointer-events:none;
 z-index:-1;
+}
+
+.heart{
+position:absolute;
+bottom:-20px;
+color:#ff4dd2;
+font-size:18px;
+animation:rise 6s linear infinite;
+}
+
+@keyframes rise{
+
+0%{
+transform:translateY(0);
+opacity:1;
+}
+
+100%{
+transform:translateY(-110vh);
+opacity:0;
+}
+
 }
 
 /* INTRO */
 
 #intro{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
 display:flex;
@@ -68,7 +100,7 @@ to{opacity:1}
 
 #main{
 display:none;
-padding-top:80px;
+padding-top:70px;
 }
 
 /* GIFT */
@@ -80,9 +112,9 @@ animation:shake 1s infinite;
 }
 
 @keyframes shake{
-0%{transform:rotate(-5deg)}
-50%{transform:rotate(5deg)}
-100%{transform:rotate(-5deg)}
+0%{transform:rotate(-6deg)}
+50%{transform:rotate(6deg)}
+100%{transform:rotate(-6deg)}
 }
 
 /* MESSAGE */
@@ -100,70 +132,86 @@ border-right:2px solid white;
 white-space:pre-line;
 }
 
-/* 3D PHOTO ORBIT */
+/* 3D PHOTO RING */
 
 .scene{
-width:260px;
-height:260px;
-margin:80px auto;
+
+width:280px;
+height:280px;
+
+margin:70px auto;
+
 perspective:1000px;
+
 }
 
 .ring{
+
 width:100%;
 height:100%;
+
 position:relative;
+
 transform-style:preserve-3d;
+
 animation:spin 25s linear infinite;
+
 }
 
 .ring img{
+
 position:absolute;
+
 width:200px;
 height:200px;
-left:30px;
-top:30px;
-border-radius:12px;
-object-fit:cover;
-box-shadow:0 0 20px rgba(255,255,255,0.7);
-transition:0.4s;
-}
 
-.ring img:hover{
-transform:scale(1.2);
+left:40px;
+top:40px;
+
+border-radius:14px;
+
+object-fit:cover;
+
+box-shadow:0 0 20px rgba(255,255,255,0.7);
+
 }
 
 @keyframes spin{
-from{transform:rotateY(0deg)}
-to{transform:rotateY(360deg)}
+
+from{
+transform:rotateY(0deg)
 }
 
-/* HEART */
-
-.heart{
-position:fixed;
-bottom:-10px;
-font-size:20px;
-animation:float 6s linear infinite;
+to{
+transform:rotateY(360deg)
 }
 
-@keyframes float{
-0%{transform:translateY(100vh)}
-100%{transform:translateY(-10vh)}
 }
 
 /* BLOSSOM */
 
 .blossom{
+
 position:fixed;
+
 top:-20px;
+
 font-size:18px;
+
 animation:fall 8s linear infinite;
+
 }
 
 @keyframes fall{
-0%{transform:translateY(-10vh)}
-100%{transform:translateY(110vh)}
+
+0%{
+transform:translateY(-10vh)
+}
+
+100%{
+transform:translateY(110vh)
+}
+
 }
 
 </style>
@@ -173,16 +221,22 @@ animation:fall 8s linear infinite;
 
 <!-- VIDEO BACKGROUND -->
 
-<video class="bg" autoplay loop playsinline controls>
-<source src="lv_7612043031386066184_20260313141159.mp4" type="video/mp4">
+<video class="bg" autoplay loop playsinline>
+
+<source src="video.mp4" type="video/mp4">
+
 </video>
 
 <div class="overlay"></div>
 
+<div class="hearts-bg" id="hearts"></div>
+
 <!-- INTRO -->
 
 <div id="intro">
+
 <h1 class="introText">Happy Birthday TuTu 🎂</h1>
+
 </div>
 
 <!-- MAIN -->
@@ -194,12 +248,15 @@ animation:fall 8s linear infinite;
 <h1>Happy Birthday ❤️</h1>
 
 <div class="message">
+
 <p id="typing"></p>
+
 </div>
 
-<!-- 3D ORBIT PHOTOS -->
+<!-- 3D PHOTOS -->
 
 <div class="scene">
+
 <div class="ring" id="ring">
 
 <img src="IMG_20260306_100008.jpg">
@@ -213,6 +270,7 @@ animation:fall 8s linear infinite;
 <img src="IMG_20260311_143420.jpg">
 
 </div>
+
 </div>
 
 </div>
@@ -222,20 +280,106 @@ animation:fall 8s linear infinite;
 /* INTRO 3 SEC */
 
 setTimeout(()=>{
-document.getElementById("intro").style.display="none";
-document.getElementById("main").style.display="block";
-},3000);
+
+document.getElementById("intro").style.display="none"
+
+document.getElementById("main").style.display="block"
+
+},3000)
+
+/* PINK HEARTS */
+
+function createHeart(){
+
+let heart=document.createElement("div")
+
+heart.className="heart"
+
+heart.innerHTML="❤"
+
+heart.style.left=Math.random()*100+"vw"
+
+heart.style.fontSize=(10+Math.random()*20)+"px"
+
+document.getElementById("hearts").appendChild(heart)
+
+setTimeout(()=>{
+
+heart.remove()
+
+},6000)
+
+}
+
+setInterval(createHeart,200)
+
+/* BLOSSOM */
+
+function blossom(){
+
+let b=document.createElement("div")
+
+b.className="blossom"
+
+b.innerHTML="🌸"
+
+b.style.left=Math.random()*100+"vw"
+
+document.body.appendChild(b)
+
+setTimeout(()=>{
+
+b.remove()
+
+},8000)
+
+}
+
+setInterval(blossom,700)
+
+/* FIREWORKS */
+
+function fireworks(){
+
+for(let i=0;i<30;i++){
+
+let f=document.createElement("div")
+
+f.innerHTML="🎆"
+
+f.style.position="fixed"
+
+f.style.left=Math.random()*100+"vw"
+
+f.style.top=Math.random()*100+"vh"
+
+f.style.fontSize="28px"
+
+document.body.appendChild(f)
+
+setTimeout(()=>{
+
+f.remove()
+
+},2000)
+
+}
+
+}
 
 /* GIFT */
 
 function openGift(){
-startTyping();
-fireworks();
+
+startTyping()
+
+fireworks()
+
 }
 
 /* TYPING */
 
-const text=`Happy Birthday, TuTu. 🎂
+const text=`Happy Birthday, TuTu 🎂
 
 From today onward,
 I wish you endless luck and happiness.
@@ -251,97 +395,43 @@ that truly matter in your life.
 
 And if life allows,
 I hope I can always hear
-your beautiful singing voice. 🎶`;
+your beautiful singing voice.`
 
-let i=0;
+let i=0
 
 function startTyping(){
 
 function type(){
+
 if(i<text.length){
-document.getElementById("typing").innerHTML+=text.charAt(i);
-i++;
-setTimeout(type,40);
-}
-}
 
-type();
-}
+document.getElementById("typing").innerHTML+=text.charAt(i)
 
-/* HEART */
+i++
 
-function hearts(){
-const heart=document.createElement("div");
-
-heart.className="heart";
-heart.innerHTML="❤";
-heart.style.left=Math.random()*100+"vw";
-
-document.body.appendChild(heart);
-
-setTimeout(()=>{
-heart.remove();
-},6000);
-}
-
-setInterval(hearts,500);
-
-/* BLOSSOM */
-
-function blossom(){
-
-const b=document.createElement("div");
-
-b.className="blossom";
-b.innerHTML="🌸";
-
-b.style.left=Math.random()*100+"vw";
-
-document.body.appendChild(b);
-
-setTimeout(()=>{
-b.remove();
-},8000);
-
-}
-
-setInterval(blossom,700);
-
-/* FIREWORKS */
-
-function fireworks(){
-
-for(let i=0;i<30;i++){
-
-let conf=document.createElement("div");
-
-conf.innerHTML="🎆";
-
-conf.style.position="fixed";
-conf.style.left=Math.random()*100+"vw";
-conf.style.top=Math.random()*100+"vh";
-conf.style.fontSize="30px";
-
-document.body.appendChild(conf);
-
-setTimeout(()=>{
-conf.remove();
-},2000);
+setTimeout(type,40)
 
 }
 
 }
 
-/* 3D ORBIT POSITION */
+type()
 
-const imgs=document.querySelectorAll("#ring img");
-const angle=360/imgs.length;
+}
+
+/* 3D PHOTO POSITION */
+
+const imgs=document.querySelectorAll("#ring img")
+
+const angle=360/imgs.length
 
 imgs.forEach((img,i)=>{
-img.style.transform=`rotateY(${angle*i}deg) translateZ(350px)`;
-});
+
+img.style.transform=`rotateY(${angle*i}deg) translateZ(350px)`
+
+})
 
 </script>
 
 </body>
-  </html>
+</html>
