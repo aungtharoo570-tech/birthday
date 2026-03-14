@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Surprise</title>
 
 <style>
 
 body{
 margin:0;
-background:#e6a4b4;
 font-family:sans-serif;
-text-align:center;
+background:#f6b6d8;
 color:white;
+text-align:center;
+overflow-x:hidden;
 }
 
 /* intro */
@@ -21,9 +24,9 @@ height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:26px;
-animation:pulse 1.5s infinite;
+font-size:28px;
 cursor:pointer;
+animation:pulse 1.5s infinite;
 }
 
 @keyframes pulse{
@@ -39,15 +42,16 @@ display:none;
 padding:20px;
 }
 
-/* message */
+/* typing message */
 
 #typing{
-max-width:320px;
+max-width:330px;
 margin:auto;
-line-height:1.6;
+line-height:1.7;
+font-size:17px;
 }
 
-/* globe */
+/* photo globe */
 
 .scene{
 width:260px;
@@ -68,11 +72,12 @@ animation:spin 25s linear infinite;
 .globe img{
 position:absolute;
 width:120px;
-height:150px;
+height:160px;
 object-fit:cover;
 border-radius:12px;
 left:70px;
 top:40px;
+box-shadow:0 0 12px rgba(255,255,255,0.4);
 }
 
 .globe img:nth-child(1){transform:rotateY(0deg) translateZ(200px);}
@@ -92,17 +97,19 @@ to{transform:rotateY(360deg);}
 
 /* video */
 
-#videoSection{
+#videoBox{
 display:none;
-margin-top:30px;
+opacity:0;
+transition:opacity 1.5s;
+margin-top:25px;
 }
 
 video{
-width:100%;
-border-radius:15px;
+width:300px;
+border-radius:12px;
 }
 
-/* flowers */
+/* flower rain */
 
 .flower{
 position:fixed;
@@ -120,9 +127,7 @@ to{transform:translateY(110vh);}
 
 <body>
 
-<div id="intro">
-🎁 Tap to Open Gift
-</div>
+<div id="intro">🎁 Tap to Open Gift</div>
 
 <div id="content">
 
@@ -146,12 +151,10 @@ to{transform:translateY(110vh);}
 </div>
 </div>
 
-<div id="videoSection">
+<div id="videoBox">
 
-<video controls loop>
-
+<video controls loop playsinline>
 <source src="video.mp4" type="video/mp4">
-
 </video>
 
 </div>
@@ -160,22 +163,21 @@ to{transform:translateY(110vh);}
 
 <script>
 
-/* open gift */
+/* intro click */
 
 document.getElementById("intro").onclick=function(){
 
 this.style.display="none";
 document.getElementById("content").style.display="block";
 
-typing();
-
+startTyping();
 flowers();
 
 }
 
 /* typing */
 
-let text=`Happy Birthday, TuTu 🎂
+const text=`Happy Birthday, TuTu. 🎂
 
 From today onward,
 I wish you endless luck and happiness.
@@ -183,7 +185,7 @@ I wish you endless luck and happiness.
 Please always take good care of your health.
 
 May you have the courage
-to let go of things that don’t matter
+to let go of things that don't matter
 and people who are not meant for you.
 
 Spend your time on the things
@@ -195,7 +197,7 @@ your beautiful singing voice. 🎶`;
 
 let i=0;
 
-function typing(){
+function startTyping(){
 
 let el=document.getElementById("typing");
 
@@ -204,7 +206,6 @@ function type(){
 if(i<text.length){
 
 el.innerHTML+=text.charAt(i);
-
 i++;
 
 setTimeout(type,40);
@@ -213,11 +214,16 @@ setTimeout(type,40);
 
 document.getElementById("photo").style.display="block";
 
+/* 3 sec later show video */
+
 setTimeout(function(){
 
-document.getElementById("videoSection").style.display="block";
+let v=document.getElementById("videoBox");
+v.style.display="block";
 
-},1000);
+setTimeout(()=>{v.style.opacity=1;},50);
+
+},3000);
 
 }
 
@@ -227,21 +233,17 @@ type();
 
 }
 
-/* flowers */
+/* flower rain */
 
 function flowers(){
 
 setInterval(()=>{
 
 let f=document.createElement("div");
-
 f.className="flower";
-
 f.innerHTML="🌸";
-
 f.style.left=Math.random()*100+"vw";
-
-f.style.animationDuration=3+Math.random()*4+"s";
+f.style.animationDuration=4+Math.random()*3+"s";
 
 document.body.appendChild(f);
 
@@ -254,4 +256,4 @@ setTimeout(()=>f.remove(),7000);
 </script>
 
 </body>
-</html>
+  </html>
