@@ -1,55 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday</title>
 
 <style>
 
 body{
 margin:0;
-font-family: 'Segoe UI',sans-serif;
-background:#f7b6d2;
-overflow-x:hidden;
+background:#e6a4b4;
+font-family:sans-serif;
 text-align:center;
 color:white;
 }
 
-/* tap intro */
+/* intro */
 
 #intro{
 height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:28px;
+font-size:26px;
+animation:pulse 1.5s infinite;
 cursor:pointer;
 }
 
-/* main content */
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.1);}
+100%{transform:scale(1);}
+}
+
+/* content */
 
 #content{
 display:none;
 padding:20px;
 }
 
-/* typing message */
+/* message */
 
-.message{
+#typing{
 max-width:320px;
 margin:auto;
-line-height:1.7;
-}
-
-/* video */
-
-video{
-width:90%;
-max-width:420px;
-border-radius:15px;
-margin:30px auto;
-display:block;
+line-height:1.6;
 }
 
 /* globe */
@@ -57,31 +52,28 @@ display:block;
 .scene{
 width:260px;
 height:260px;
-margin:60px auto;
+margin:40px auto;
 perspective:1000px;
-position:relative;
+display:none;
 }
 
 .globe{
 width:100%;
 height:100%;
-position:absolute;
+position:relative;
 transform-style:preserve-3d;
-animation:rotate 25s linear infinite;
+animation:spin 25s linear infinite;
 }
 
 .globe img{
 position:absolute;
 width:120px;
-height:160px;
+height:150px;
 object-fit:cover;
 border-radius:12px;
 left:70px;
 top:40px;
-box-shadow:0 0 20px rgba(255,255,255,0.4);
 }
-
-/* positions */
 
 .globe img:nth-child(1){transform:rotateY(0deg) translateZ(200px);}
 .globe img:nth-child(2){transform:rotateY(40deg) translateZ(200px);}
@@ -93,51 +85,34 @@ box-shadow:0 0 20px rgba(255,255,255,0.4);
 .globe img:nth-child(8){transform:rotateY(280deg) translateZ(200px);}
 .globe img:nth-child(9){transform:rotateY(320deg) translateZ(200px);}
 
-@keyframes rotate{
+@keyframes spin{
 from{transform:rotateY(0deg);}
 to{transform:rotateY(360deg);}
 }
 
-/* glow */
+/* video */
 
-.scene::after{
-content:"";
-position:absolute;
-bottom:-40px;
-left:50%;
-transform:translateX(-50%);
-width:200px;
-height:40px;
-background:radial-gradient(pink,transparent);
-filter:blur(10px);
+#videoSection{
+display:none;
+margin-top:30px;
+}
+
+video{
+width:100%;
+border-radius:15px;
 }
 
 /* flowers */
 
 .flower{
 position:fixed;
-top:-10px;
+top:-20px;
 font-size:20px;
 animation:fall linear infinite;
 }
 
 @keyframes fall{
-to{
-transform:translateY(110vh);
-}
-}
-
-/* fireworks */
-
-.firework{
-position:fixed;
-font-size:24px;
-animation:boom 1s ease-out forwards;
-}
-
-@keyframes boom{
-0%{opacity:1;transform:scale(0);}
-100%{opacity:0;transform:scale(4);}
+to{transform:translateY(110vh);}
 }
 
 </style>
@@ -153,13 +128,9 @@ animation:boom 1s ease-out forwards;
 
 <h2>Happy Birthday ❤️</h2>
 
-<div class="message" id="typing"></div>
+<div id="typing"></div>
 
-<video controls loop>
-<source src="video.mp4" type="video/mp4">
-</video>
-
-<div class="scene">
+<div class="scene" id="photo">
 <div class="globe">
 
 <img src="IMG_20260306_100008.jpg">
@@ -175,6 +146,16 @@ animation:boom 1s ease-out forwards;
 </div>
 </div>
 
+<div id="videoSection">
+
+<video controls loop>
+
+<source src="video.mp4" type="video/mp4">
+
+</video>
+
+</div>
+
 </div>
 
 <script>
@@ -182,16 +163,19 @@ animation:boom 1s ease-out forwards;
 /* open gift */
 
 document.getElementById("intro").onclick=function(){
-document.getElementById("intro").style.display="none";
+
+this.style.display="none";
 document.getElementById("content").style.display="block";
-startTyping();
-createFlowers();
-fireworksLoop();
+
+typing();
+
+flowers();
+
 }
 
-/* typing message */
+/* typing */
 
-const text=`Happy Birthday, TuTu. 🎂
+let text=`Happy Birthday, TuTu 🎂
 
 From today onward,
 I wish you endless luck and happiness.
@@ -211,53 +195,59 @@ your beautiful singing voice. 🎶`;
 
 let i=0;
 
-function startTyping(){
-const el=document.getElementById("typing");
+function typing(){
+
+let el=document.getElementById("typing");
 
 function type(){
+
 if(i<text.length){
+
 el.innerHTML+=text.charAt(i);
+
 i++;
+
 setTimeout(type,40);
+
+}else{
+
+document.getElementById("photo").style.display="block";
+
+setTimeout(function(){
+
+document.getElementById("videoSection").style.display="block";
+
+},1000);
+
 }
+
 }
 
 type();
+
 }
 
-/* flowers rain */
+/* flowers */
 
-function createFlowers(){
+function flowers(){
+
 setInterval(()=>{
+
 let f=document.createElement("div");
+
 f.className="flower";
+
 f.innerHTML="🌸";
+
 f.style.left=Math.random()*100+"vw";
+
 f.style.animationDuration=3+Math.random()*4+"s";
+
 document.body.appendChild(f);
 
 setTimeout(()=>f.remove(),7000);
 
 },500);
-}
-
-/* fireworks */
-
-function fireworksLoop(){
-
-setInterval(()=>{
-
-let f=document.createElement("div");
-f.className="firework";
-f.innerHTML="🎆";
-f.style.left=Math.random()*100+"vw";
-f.style.top=Math.random()*80+"vh";
-
-document.body.appendChild(f);
-
-setTimeout(()=>f.remove(),1000);
-
-},1200);
 
 }
 
