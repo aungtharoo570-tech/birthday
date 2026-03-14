@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -10,10 +11,10 @@
 
 body{
 margin:0;
+background:#f7b6d8;
 font-family:sans-serif;
-background:#f6b6d8;
-color:white;
 text-align:center;
+color:white;
 overflow-x:hidden;
 }
 
@@ -30,22 +31,20 @@ animation:pulse 1.5s infinite;
 }
 
 @keyframes pulse{
-0%{transform:scale(1);}
-50%{transform:scale(1.1);}
-100%{transform:scale(1);}
+0%{transform:scale(1)}
+50%{transform:scale(1.1)}
+100%{transform:scale(1)}
 }
-
-/* content */
 
 #content{
 display:none;
 padding:20px;
 }
 
-/* typing message */
+/* typing */
 
 #typing{
-max-width:330px;
+max-width:320px;
 margin:auto;
 line-height:1.7;
 font-size:17px;
@@ -54,8 +53,8 @@ font-size:17px;
 /* photo globe */
 
 .scene{
-width:260px;
-height:260px;
+width:250px;
+height:250px;
 margin:40px auto;
 perspective:1000px;
 display:none;
@@ -66,7 +65,7 @@ width:100%;
 height:100%;
 position:relative;
 transform-style:preserve-3d;
-animation:spin 25s linear infinite;
+animation:spin 20s linear infinite;
 }
 
 .globe img{
@@ -75,24 +74,17 @@ width:120px;
 height:160px;
 object-fit:cover;
 border-radius:12px;
-left:70px;
+left:65px;
 top:40px;
-box-shadow:0 0 12px rgba(255,255,255,0.4);
+box-shadow:0 0 12px rgba(255,255,255,0.5);
 }
 
 .globe img:nth-child(1){transform:rotateY(0deg) translateZ(200px);}
-.globe img:nth-child(2){transform:rotateY(40deg) translateZ(200px);}
-.globe img:nth-child(3){transform:rotateY(80deg) translateZ(200px);}
-.globe img:nth-child(4){transform:rotateY(120deg) translateZ(200px);}
-.globe img:nth-child(5){transform:rotateY(160deg) translateZ(200px);}
-.globe img:nth-child(6){transform:rotateY(200deg) translateZ(200px);}
-.globe img:nth-child(7){transform:rotateY(240deg) translateZ(200px);}
-.globe img:nth-child(8){transform:rotateY(280deg) translateZ(200px);}
-.globe img:nth-child(9){transform:rotateY(320deg) translateZ(200px);}
+.globe img:nth-child(2){transform:rotateY(180deg) translateZ(200px);}
 
 @keyframes spin{
-from{transform:rotateY(0deg);}
-to{transform:rotateY(360deg);}
+from{transform:rotateY(0)}
+to{transform:rotateY(360deg)}
 }
 
 /* video */
@@ -100,8 +92,7 @@ to{transform:rotateY(360deg);}
 #videoBox{
 display:none;
 opacity:0;
-transition:opacity 1.5s;
-margin-top:25px;
+transition:1.5s;
 }
 
 video{
@@ -114,12 +105,12 @@ border-radius:12px;
 .flower{
 position:fixed;
 top:-20px;
-font-size:20px;
+font-size:22px;
 animation:fall linear infinite;
 }
 
 @keyframes fall{
-to{transform:translateY(110vh);}
+to{transform:translateY(110vh)}
 }
 
 </style>
@@ -135,26 +126,23 @@ to{transform:translateY(110vh);}
 
 <div id="typing"></div>
 
-<div class="scene" id="photo">
+<div class="scene" id="photos">
+
 <div class="globe">
 
-<img src="IMG_20260306_100008.jpg">
-<img src="IMG_20260307_143345.jpg">
-<img src="IMG_20260307_143417.jpg">
-<img src="IMG_20260307_143433.jpg">
-<img src="IMG_20260307_143450.jpg">
-<img src="IMG_20260307_143622.jpg">
 <img src="IMG_20260311_135809_740.jpg">
 <img src="IMG_20260311_135812_701.jpg">
-<img src="IMG_20260311_143420.jpg">
 
 </div>
+
 </div>
 
 <div id="videoBox">
 
 <video controls loop playsinline>
-<source src="video.mp4" type="video/mp4">
+
+<source src="lv_7612043031386066184_20260313141159.mp4" type="video/mp4">
+
 </video>
 
 </div>
@@ -163,21 +151,23 @@ to{transform:translateY(110vh);}
 
 <script>
 
-/* intro click */
+/* intro */
 
 document.getElementById("intro").onclick=function(){
 
-this.style.display="none";
-document.getElementById("content").style.display="block";
+this.style.display="none"
 
-startTyping();
-flowers();
+document.getElementById("content").style.display="block"
+
+typing()
+
+flowerRain()
 
 }
 
-/* typing */
+/* typing message */
 
-const text=`Happy Birthday, TuTu. 🎂
+const msg=`Happy Birthday, TuTu 🎂
 
 From today onward,
 I wish you endless luck and happiness.
@@ -193,67 +183,81 @@ that truly matter in your life.
 
 And if life allows,
 I hope I can always hear
-your beautiful singing voice. 🎶`;
+your beautiful singing voice. 🎶`
 
-let i=0;
+let i=0
 
-function startTyping(){
+function typing(){
 
-let el=document.getElementById("typing");
+let el=document.getElementById("typing")
 
 function type(){
 
-if(i<text.length){
+if(i<msg.length){
 
-el.innerHTML+=text.charAt(i);
-i++;
+el.innerHTML+=msg.charAt(i)
 
-setTimeout(type,40);
+i++
 
-}else{
+setTimeout(type,40)
 
-document.getElementById("photo").style.display="block";
+}
 
-/* 3 sec later show video */
+else{
 
-setTimeout(function(){
+document.getElementById("photos").style.display="block"
 
-let v=document.getElementById("videoBox");
-v.style.display="block";
-
-setTimeout(()=>{v.style.opacity=1;},50);
-
-},3000);
+setTimeout(showVideo,3000)
 
 }
 
 }
 
-type();
+type()
+
+}
+
+/* video show */
+
+function showVideo(){
+
+let v=document.getElementById("videoBox")
+
+v.style.display="block"
+
+setTimeout(()=>{
+
+v.style.opacity=1
+
+},50)
 
 }
 
 /* flower rain */
 
-function flowers(){
+function flowerRain(){
 
 setInterval(()=>{
 
-let f=document.createElement("div");
-f.className="flower";
-f.innerHTML="🌸";
-f.style.left=Math.random()*100+"vw";
-f.style.animationDuration=4+Math.random()*3+"s";
+let f=document.createElement("div")
 
-document.body.appendChild(f);
+f.className="flower"
 
-setTimeout(()=>f.remove(),7000);
+f.innerHTML="🌸"
 
-},500);
+f.style.left=Math.random()*100+"vw"
+
+f.style.animationDuration=4+Math.random()*3+"s"
+
+document.body.appendChild(f)
+
+setTimeout(()=>f.remove(),7000)
+
+},500)
 
 }
 
 </script>
 
 </body>
-  </html>
+</html>
