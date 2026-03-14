@@ -11,7 +11,7 @@
 
 body{
 margin:0;
-background:#f7b6d8;
+background:#f5a9c6;
 font-family:sans-serif;
 text-align:center;
 color:white;
@@ -25,7 +25,7 @@ height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:28px;
+font-size:30px;
 cursor:pointer;
 animation:pulse 1.5s infinite;
 }
@@ -44,7 +44,7 @@ padding:20px;
 /* typing */
 
 #typing{
-max-width:320px;
+max-width:340px;
 margin:auto;
 line-height:1.7;
 font-size:17px;
@@ -53,9 +53,9 @@ font-size:17px;
 /* photo globe */
 
 .scene{
-width:250px;
-height:250px;
-margin:40px auto;
+width:260px;
+height:260px;
+margin:50px auto;
 perspective:1000px;
 display:none;
 }
@@ -74,13 +74,22 @@ width:120px;
 height:160px;
 object-fit:cover;
 border-radius:12px;
-left:65px;
+left:70px;
 top:40px;
 box-shadow:0 0 12px rgba(255,255,255,0.5);
 }
 
-.globe img:nth-child(1){transform:rotateY(0deg) translateZ(200px);}
-.globe img:nth-child(2){transform:rotateY(180deg) translateZ(200px);}
+/* 9 photos circle */
+
+.globe img:nth-child(1){transform:rotateY(0deg) translateZ(220px);}
+.globe img:nth-child(2){transform:rotateY(40deg) translateZ(220px);}
+.globe img:nth-child(3){transform:rotateY(80deg) translateZ(220px);}
+.globe img:nth-child(4){transform:rotateY(120deg) translateZ(220px);}
+.globe img:nth-child(5){transform:rotateY(160deg) translateZ(220px);}
+.globe img:nth-child(6){transform:rotateY(200deg) translateZ(220px);}
+.globe img:nth-child(7){transform:rotateY(240deg) translateZ(220px);}
+.globe img:nth-child(8){transform:rotateY(280deg) translateZ(220px);}
+.globe img:nth-child(9){transform:rotateY(320deg) translateZ(220px);}
 
 @keyframes spin{
 from{transform:rotateY(0)}
@@ -93,6 +102,7 @@ to{transform:rotateY(360deg)}
 display:none;
 opacity:0;
 transition:1.5s;
+margin-top:30px;
 }
 
 video{
@@ -105,7 +115,7 @@ border-radius:12px;
 .flower{
 position:fixed;
 top:-20px;
-font-size:22px;
+font-size:20px;
 animation:fall linear infinite;
 }
 
@@ -130,8 +140,15 @@ to{transform:translateY(110vh)}
 
 <div class="globe">
 
+<img src="IMG_20260306_100008.jpg">
+<img src="IMG_20260307_143345.jpg">
+<img src="IMG_20260307_143417.jpg">
+<img src="IMG_20260307_143433.jpg">
+<img src="IMG_20260307_143450.jpg">
+<img src="IMG_20260307_143622.jpg">
 <img src="IMG_20260311_135809_740.jpg">
 <img src="IMG_20260311_135812_701.jpg">
+<img src="IMG_20260311_143420.jpg">
 
 </div>
 
@@ -151,7 +168,7 @@ to{transform:translateY(110vh)}
 
 <script>
 
-/* intro */
+/* intro click */
 
 document.getElementById("intro").onclick=function(){
 
@@ -253,7 +270,7 @@ document.body.appendChild(f)
 
 setTimeout(()=>f.remove(),7000)
 
-},500)
+},400)
 
 }
 
