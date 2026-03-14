@@ -1,112 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Birthday Surprise</title>
 
 <style>
 
 body{
 margin:0;
-overflow:hidden;
+background:#ffc0e6;
 font-family:Arial;
-background:linear-gradient(135deg,#ffb6c1,#ffc0cb,#ffd6e7);
-color:white;
 text-align:center;
+color:white;
+overflow-x:hidden;
 }
 
-/* tap screen */
+/* INTRO */
 
-#startScreen{
+#intro{
 position:fixed;
 width:100%;
 height:100%;
+background:#ffc0e6;
 display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
-flex-direction:column;
-background:#ffb6c1;
 z-index:10;
+}
+
+.gift{
+font-size:90px;
 cursor:pointer;
+animation:shake 1s infinite;
 }
 
-#startScreen h1{
-font-size:30px;
-animation:pulse 1.5s infinite;
+@keyframes shake{
+0%{transform:rotate(-5deg)}
+50%{transform:rotate(5deg)}
+100%{transform:rotate(-5deg)}
 }
 
-@keyframes pulse{
-0%{transform:scale(1)}
-50%{transform:scale(1.2)}
-100%{transform:scale(1)}
-}
+/* LETTER */
 
-/* typing text */
-
-#message{
+#letter{
+display:none;
 margin-top:40px;
-font-size:22px;
-width:80%;
-margin-left:auto;
-margin-right:auto;
+animation:openLetter 1s;
 }
 
-/* video */
+@keyframes openLetter{
+from{transform:scale(0)}
+to{transform:scale(1)}
+}
+
+.message{
+max-width:600px;
+margin:auto;
+line-height:1.7;
+font-size:18px;
+padding:20px;
+}
+
+#typing{
+border-right:2px solid white;
+white-space:pre-line;
+overflow:hidden;
+display:inline-block;
+}
+
+/* VIDEO */
 
 video{
-width:80%;
-margin-top:20px;
-border-radius:20px;
-box-shadow:0 0 20px pink;
+width:90%;
+max-width:400px;
+margin-top:30px;
+border-radius:10px;
 }
 
-/* hearts rain */
+/* 3D GLOBE */
 
-.heart{
+.gallery{
+margin-top:40px;
+display:flex;
+justify-content:center;
+perspective:1000px;
+}
+
+.carousel{
+width:260px;
+height:260px;
+position:relative;
+transform-style:preserve-3d;
+animation:spin 20s linear infinite;
+}
+
+.carousel img{
+position:absolute;
+width:220px;
+height:220px;
+border-radius:12px;
+object-fit:cover;
+left:20px;
+top:20px;
+}
+
+@keyframes spin{
+from{transform:rotateY(0deg)}
+to{transform:rotateY(360deg)}
+}
+
+/* FLOWERS */
+
+.flower{
 position:fixed;
 top:-10px;
-font-size:20px;
+font-size:18px;
 animation:fall linear infinite;
 }
 
 @keyframes fall{
-0%{transform:translateY(-10px)}
-100%{transform:translateY(110vh)}
+to{transform:translateY(110vh)}
 }
 
-/* globe */
+/* FIREWORKS */
 
-#globe{
-width:200px;
-height:200px;
-margin:auto;
-margin-top:20px;
-animation:spin 15s linear infinite;
-}
-
-#globe img{
-width:100%;
-border-radius:50%;
-}
-
-@keyframes spin{
-0%{transform:rotateY(0)}
-100%{transform:rotateY(360deg)}
-}
-
-/* love letter */
-
-#letter{
-margin-top:30px;
+.fire{
+position:fixed;
 font-size:28px;
-animation:openLetter 3s ease forwards;
-opacity:0;
-}
-
-@keyframes openLetter{
-0%{transform:scale(0.5);opacity:0}
-100%{transform:scale(1);opacity:1}
 }
 
 </style>
@@ -114,83 +137,166 @@ opacity:0;
 
 <body>
 
-<div id="startScreen" onclick="startSurprise()">
-<h1>🎁 Tap To Open Gift</h1>
+<!-- INTRO -->
+
+<div id="intro">
+
+<div class="gift" onclick="openGift()">🎁</div>
+
+<h2>Tap to Open Gift</h2>
+
 </div>
 
-<div id="main" style="display:none">
+<!-- LETTER -->
 
-<h1>Happy Birthday 🎂</h1>
+<div id="letter">
 
-<div id="message"></div>
+<h1>Happy Birthday ❤️</h1>
 
-<div id="globe">
-<img src="https://i.imgur.com/7yUvePI.jpg">
+<div class="message">
+<p id="typing"></p>
 </div>
+
+<!-- VIDEO -->
 
 <video autoplay loop playsinline controls>
 <source src="video.mp4" type="video/mp4">
 </video>
 
-<div id="letter">💌 With Love</div>
+<!-- 3D PHOTO GLOBE -->
+
+<div class="gallery">
+
+<div class="carousel" id="carousel">
+
+<img src="IMG_20260306_100008.jpg">
+<img src="IMG_20260307_143345.jpg">
+<img src="IMG_20260307_143417.jpg">
+<img src="IMG_20260307_143433.jpg">
+<img src="IMG_20260307_143450.jpg">
+<img src="IMG_20260307_143622.jpg">
+<img src="IMG_20260307_143700_9.jpg">
+<img src="IMG_20260307_143709_3.jpg">
+<img src="IMG_20260311_143420.jpg">
+
+</div>
+
+</div>
 
 </div>
 
 <script>
 
-/* typing effect */
+/* OPEN GIFT */
 
-let text="Happy Birthday! 🎉 I hope today brings you happiness, love and endless smiles.";
-let i=0;
+function openGift(){
 
-function type(){
-if(i<text.length){
-document.getElementById("message").innerHTML+=text.charAt(i);
-i++;
-setTimeout(type,50);
-}
-}
+document.getElementById("intro").style.display="none";
+document.getElementById("letter").style.display="block";
 
-/* hearts rain */
-
-function hearts(){
-for(let i=0;i<30;i++){
-let heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML=Math.random()>0.5?"💗":"🌸";
-heart.style.left=Math.random()*100+"vw";
-heart.style.animationDuration=(3+Math.random()*5)+"s";
-document.body.appendChild(heart);
-}
-}
-
-/* fireworks */
-
-function fireworks(){
-setInterval(()=>{
-let fire=document.createElement("div");
-fire.innerHTML="🎆";
-fire.style.position="fixed";
-fire.style.left=Math.random()*100+"vw";
-fire.style.top=Math.random()*100+"vh";
-fire.style.fontSize="30px";
-document.body.appendChild(fire);
-setTimeout(()=>fire.remove(),1000);
-},500);
-}
-
-function startSurprise(){
-
-document.getElementById("startScreen").style.display="none";
-document.getElementById("main").style.display="block";
-
-type();
-hearts();
+startTyping();
+flowers();
 fireworks();
 
 }
 
+/* TYPING MESSAGE */
+
+const text=`Happy Birthday, TuTu. 🎂
+
+From today onward,
+I wish you endless luck and happiness.
+
+Please always take good care of your health.
+
+May you have the courage
+to let go of things that don’t matter
+and people who are not meant for you.
+
+Spend your time on the things
+that truly matter in your life.
+
+And if life allows,
+I hope I can always hear
+your beautiful singing voice. 🎶`;
+
+let i=0;
+
+function startTyping(){
+
+let speed=40;
+
+function type(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,speed);
+}
+}
+
+type();
+}
+
+/* FLOWERS */
+
+function flowers(){
+
+setInterval(()=>{
+let f=document.createElement("div");
+f.className="flower";
+f.innerHTML="🌸";
+f.style.left=Math.random()*100+"vw";
+f.style.animationDuration=3+Math.random()*5+"s";
+
+document.body.appendChild(f);
+
+setTimeout(()=>{f.remove();},8000);
+
+},300);
+
+}
+
+/* FIREWORKS */
+
+function fireworks(){
+
+setInterval(()=>{
+
+for(let i=0;i<15;i++){
+
+let fire=document.createElement("div");
+
+fire.className="fire";
+
+fire.innerHTML="🎆";
+
+fire.style.left=Math.random()*100+"vw";
+
+fire.style.top=Math.random()*100+"vh";
+
+document.body.appendChild(fire);
+
+setTimeout(()=>{fire.remove();},2000);
+
+}
+
+},2000);
+
+}
+
+/* 3D GLOBE POSITION */
+
+const imgs=document.querySelectorAll("#carousel img");
+
+const angle=360/imgs.length;
+
+imgs.forEach((img,i)=>{
+
+img.style.transform=`rotateY(${angle*i}deg) translateZ(350px)`;
+
+});
+
 </script>
 
 </body>
-</html>
+  </html>
